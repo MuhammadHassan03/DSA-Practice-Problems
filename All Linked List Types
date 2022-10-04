@@ -1,0 +1,1331 @@
+#include <iostream>
+using namespace std;
+class node
+{
+public:
+    int data;
+    node *next;
+};
+class SCLLNode
+{
+public:
+    int data;
+    SCLLNode *next;
+};
+class DLLNode
+{
+public:
+    int data;
+    DLLNode *next;
+    DLLNode *prev;
+};
+class DCLLNode
+{
+public:
+    int data;
+    DCLLNode *next;
+    DCLLNode *prev;
+};
+class linkedlist
+{
+    int choice, confirm, value;
+    node *head = NULL, *first = NULL, *last, *newnode;
+    DLLNode *DLLhead = NULL, *DLLfirst = NULL, *DLLlast, *DLLnewnode;
+    SCLLNode *SCLLhead = NULL, *SCLLfirst = NULL, *SCLLlast, *SCLLnewnode;
+    DCLLNode *DCLLhead = NULL, *DCLLfirst = NULL, *DCLLlast, *DCLLnewnode;
+
+public:
+    void mainmenu()
+    {
+        system("cls");
+        cout << "Welcome to Linked List Menu" << endl;
+        cout << "1- Singly Linked List" << endl;
+        cout << "2- Doubly Linked List" << endl;
+        cout << "3- Circular Linked List" << endl;
+        cout << "4- Exit The Program" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            mainmenuSLL();
+        }
+        if (choice == 2)
+        {
+            DLLMainMenu();
+        }
+        if (choice == 3)
+        {
+            CLLMainMenu();
+        }
+        if (choice == 4)
+        {
+            abort();
+        }
+    }
+    void mainmenuSLL()
+    {
+        system("cls");
+        cout << "Welcome to Singly Linked List Main Menu" << endl;
+        cout << "Note ::: For Option (2- 6). First Select Option 1" << endl;
+        cout << "1- Add Data" << endl;
+        cout << "2- Insert Data" << endl;
+        cout << "3- Delete Data" << endl;
+        cout << "4- Search Data" << endl;
+        cout << "5- Update Data" << endl;
+        cout << "6- Display ALL Data" << endl;
+        cout << "7- Go Back to Main Menu" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            SLLAddData();
+        }
+        if (choice == 2)
+        {
+            SLLInsertDataMainMenu();
+        }
+        if (choice == 3)
+        {
+            SLLDeleteData();
+        }
+        if (choice == 4)
+        {
+            SLLSearchData();
+        }
+        if (choice == 5)
+        {
+            SLLUpdate();
+        }
+        if (choice == 6)
+        {
+            SLLDisplayData();
+        }
+        if (choice == 7)
+        {
+            mainmenu();
+        }
+    }
+    void SLLAddData()
+    {
+        system("cls");
+        do
+        {
+            newnode = new node;
+            cout << "Enter Data : ";
+            cin >> newnode->data;
+
+            if (head == NULL)
+            {
+                head = newnode;
+                first = newnode;
+                last = newnode;
+            }
+            else
+            {
+                last->next = newnode;
+                last = newnode;
+            }
+            cout << "Do You Want to Enter More Data (1/0) : ";
+            cin >> confirm;
+            if (confirm == 1)
+            {
+                continue;
+            }
+            else
+            {
+                last->next = NULL;
+            }
+        } while (last->next != NULL);
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            mainmenuSLL();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void SLLInsertDataMainMenu()
+    {
+        system("cls");
+        cout << "Choose the Right Option Below" << endl;
+        cout << "1- Insert at Start" << endl;
+        cout << "2- Insert at any point" << endl;
+        cout << "3- Insert at End" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            system("cls");
+            if (head != NULL)
+            {
+                newnode = new node;
+                cout << "Enter Data : ";
+                newnode->next = head;
+                head = newnode;
+                cin >> newnode->data;
+            }
+        }
+        if (confirm == 2)
+        {
+            system("cls");
+            if (head != NULL)
+            {
+                node *temp = head;
+                cout << "Enter Position Where You Want to Enter Data : ";
+                cin >> value;
+                for (int i = 1; i < value; i++)
+                {
+                    temp = temp->next;
+                }
+
+                newnode = new node;
+                cout << "Enter Data : ";
+                cin >> newnode->data;
+                newnode->next = temp->next;
+                temp->next = newnode;
+            }
+        }
+        if (confirm == 3)
+        {
+            system("cls");
+            if (head != NULL)
+            {
+                newnode = new node;
+                cout << "Enter Data : ";
+                cin >> newnode->data;
+                last->next = newnode;
+                last = newnode;
+                last->next = NULL;
+            }
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            mainmenuSLL();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void SLLDeleteData()
+    {
+        system("cls");
+        cout << "Choose The Option From Below" << endl;
+        cout << "1- Delete From Start" << endl;
+        cout << "2- Delete From Any Point" << endl;
+        cout << "3- Delete From End" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            node *temp;
+            temp = head;
+            head = head->next;
+
+            delete temp;
+            cout << "Data Deleted" << endl;
+        }
+        if (confirm == 2)
+        {
+            cout << "Enter Position Where You Want to Delete data : ";
+            cin >> value;
+
+            node *temp = head;
+            for (int i = 1; i < value; i++)
+            {
+                temp = temp->next;
+            }
+
+            node *current = temp->next;
+            temp->next = temp->next->next;
+            //            free(current);
+            delete current;
+        }
+        if (confirm == 3)
+        {
+            node *temp = head;
+            while (temp->next != NULL)
+            {
+                temp = temp->next;
+            }
+            last = temp;
+            delete (temp->next);
+            temp->next = NULL;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            mainmenuSLL();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void SLLSearchData()
+    {
+        system("cls");
+        int count, flag;
+        cout << "Enter Data Which you want to Search : ";
+        cin >> value;
+
+        node *temp = head;
+        while (temp != NULL)
+        {
+            if (temp->data == value)
+            {
+                flag = 1;
+            }
+            temp = temp->next;
+        }
+        if (flag == 1)
+        {
+            cout << "Data Found " << endl;
+        }
+        if (flag != 1)
+        {
+            cout << "Data Not Found" << endl;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            mainmenuSLL();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void SLLUpdate()
+    {
+        system("cls");
+        cout << "Enter Position Number where you want to Update Data : ";
+        cin >> value;
+
+        node *temp = head;
+        if (value == 1 || value == 0)
+        {
+            cout << "Enter Data : ";
+            cin >> temp->data;
+        }
+        else
+        {
+            for (int i = 0; i < value; i++)
+            {
+                temp = temp->next;
+            }
+            cout << "Enter Value : ";
+            cin >> temp->data;
+            cout << "Data Updated SucessFully....:)" << endl;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            mainmenuSLL();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void SLLDisplayData()
+    {
+        system("cls");
+        if (head != NULL)
+        {
+            node *temp = head;
+            while (temp != NULL)
+            {
+                cout << temp->data << endl;
+                temp = temp->next;
+            }
+        }
+        else
+        {
+            cout << "Data is Not Entered.. Please Access First Option in Main Menu" << endl;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            mainmenuSLL();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+
+    void DLLMainMenu()
+    {
+        system("cls");
+        cout << "Welcome to Doubly Linked List Main Menu" << endl;
+        cout << "Note ::: For Option (2- 6). First Select Option 1" << endl;
+        cout << "1- Add Data" << endl;
+        cout << "2- Insert Data" << endl;
+        cout << "3- Delete Data" << endl;
+        cout << "4- Search Data" << endl;
+        cout << "5- Update Data" << endl;
+        cout << "6- Display ALL Data" << endl;
+        cout << "7- Go Back to Main Menu" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            DLLAddData();
+        }
+        if (choice == 2)
+        {
+            DLLInsertDataMainMenu();
+        }
+        if (choice == 3)
+        {
+            DLLDeleteData();
+        }
+        if (choice == 4)
+        {
+            DLLSearchData();
+        }
+        if (choice == 5)
+        {
+            DLLUpdateData();
+        }
+        if (choice == 6)
+        {
+            DLLDisplayData();
+        }
+        if (choice == 7)
+        {
+            mainmenu();
+        }
+    }
+
+    void DLLAddData()
+    {
+        system("cls");
+        while (DLLlast->next != NULL)
+        {
+            DLLnewnode = new DLLNode;
+            cout << "Enter Data : ";
+            cin >> DLLnewnode->data;
+
+            if (DLLhead == NULL)
+            {
+                DLLhead = DLLnewnode;
+                DLLfirst = DLLnewnode;
+                DLLlast = DLLnewnode;
+                DLLhead->prev = NULL;
+                cout << "Do You Want to Enter More Data (1/0): ";
+                cin >> confirm;
+                if (confirm == 1)
+                {
+                    continue;
+                }
+                else if (confirm == 0)
+                {
+                    DLLlast->next = NULL;
+                }
+            }
+            else
+            {
+                DLLnewnode->prev = DLLlast;
+                DLLlast->next = DLLnewnode;
+                DLLlast = DLLnewnode;
+                cout << "Do You Want to Enter More Data (1/0): ";
+                cin >> confirm;
+                if (confirm == 1)
+                {
+                    continue;
+                }
+                else if (confirm == 0)
+                {
+                    DLLlast->next = NULL;
+                }
+            }
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+
+    void DLLInsertDataMainMenu()
+    {
+        system("cls");
+        cout << "Choose the Right Option Below" << endl;
+        cout << "1- Insert at Start" << endl;
+        cout << "2- Insert at any point" << endl;
+        cout << "3- Insert at End" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            if (DLLhead != NULL)
+            {
+                DLLnewnode = new DLLNode;
+                DLLnewnode->prev = NULL;
+                DLLnewnode->next = DLLhead;
+                DLLhead->prev = DLLnewnode;
+                DLLhead = DLLnewnode;
+                cout << "Enter Data : ";
+                cin >> DLLnewnode->data;
+            }
+            else
+            {
+                cout << "Data is not Stored. Access First Option in Main Menu to Add Data" << endl;
+            }
+        }
+        if (confirm == 2)
+        {
+            system("cls");
+            cout << "Enter Position Number where you want to Enter Data : ";
+            cin >> value;
+
+            DLLNode *temp = DLLhead;
+            for (int i = 0; i < value; i++)
+            {
+                temp = temp->next;
+            }
+
+            DLLnewnode = new DLLNode;
+            DLLnewnode->prev = temp;
+            DLLnewnode->next = temp->next;
+            DLLnewnode->next->prev = DLLnewnode;
+            DLLnewnode->prev->next = DLLnewnode;
+            cout << "Enter Data : ";
+            cin >> DLLnewnode->data;
+            delete temp;
+        }
+        if (confirm == 3)
+        {
+            if (DLLhead != NULL)
+            {
+                DLLnewnode = new DLLNode;
+                DLLnewnode->next = NULL;
+                DLLlast->next = DLLnewnode;
+                DLLnewnode->prev = DLLlast;
+                DLLlast = DLLnewnode;
+
+                cout << "Enter Data : ";
+                cin >> DLLnewnode->data;
+            }
+            else
+            {
+                cout << "Data is not Stored. Access First Option in Main Menu to Add Data" << endl;
+            }
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void DLLDeleteData()
+    {
+        system("cls");
+        cout << "Choose the Right Option Below" << endl;
+        cout << "1- Delete at Start" << endl;
+        cout << "2- Delete at any point" << endl;
+        cout << "3- Delete at End" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            if (DLLhead != NULL)
+            {
+                DLLNode *temp = DLLhead;
+                DLLhead = DLLhead->next;
+                DLLfirst = DLLhead;
+                DLLhead->prev = NULL;
+                temp->next = NULL;
+                //                free(temp);
+                delete temp;
+                cout << "Data Deletd Successfully" << endl;
+            }
+        }
+        if (confirm == 2)
+        {
+            cout << "Enter Position Where You Want to Delete data : ";
+            cin >> value;
+
+            DLLNode *temp = DLLhead;
+            for (int i = 1; i < value; i++)
+            {
+                temp = temp->next;
+            }
+
+            temp->prev->next = temp->next;
+            temp->next->prev = temp->prev;
+            //            free(temp);
+            delete temp;
+            cout << "Data Delelted Succesfully" << endl;
+        }
+        if (confirm == 3)
+        {
+            if (DLLhead != NULL)
+            {
+                DLLNode *temp = DLLlast;
+                DLLlast = DLLlast->prev;
+                DLLlast->next = NULL;
+                temp->prev = NULL;
+                //                free(temp);
+                delete temp;
+                cout << "Data Deletd Successfully" << endl;
+            }
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void DLLSearchData()
+    {
+        int flag;
+        system("cls");
+        cout << "Enter Data Which You want to Search : ";
+        cin >> value;
+        DLLNode *temp = DLLhead;
+        while (temp != NULL)
+        {
+            if (temp->data == value)
+            {
+                flag = 1;
+            }
+            temp = temp->next;
+        }
+        if (flag == 1)
+        {
+            cout << "Data Found" << endl;
+        }
+        else
+        {
+            cout << "Data Not Found..." << endl;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void DLLUpdateData()
+    {
+        system("cls");
+        cout << "Enter Position number where you want to Update Data : ";
+        cin >> value;
+        DLLNode *temp = DLLhead;
+        for (int i = 1; i < value; i++)
+        {
+            temp = temp->next;
+        }
+        cout << "Enter Updated Value : ";
+        cin >> temp->data;
+        cout << "Data Updated Sucessfully" << endl;
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void DLLDisplayData()
+    {
+        system("cls");
+        cout << "Choose the Option From Below" << endl;
+        cout << "1- Display From Start" << endl;
+        cout << "2- Display Reversed or From last" << endl;
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DLLNode *temp = DLLhead;
+            while (temp != NULL)
+            {
+                cout << temp->data << endl;
+                temp = temp->next;
+            }
+            delete temp;
+        }
+        if (confirm == 2)
+        {
+            DLLNode *temp = DLLlast;
+            while (temp != NULL)
+            {
+                cout << temp->data << endl;
+                temp = temp->prev;
+            }
+            delete temp;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void CLLMainMenu()
+    {
+        system("cls");
+        cout << "Welcome to Circluar Linked List" << endl;
+        cout << "Choose Option From Below" << endl;
+        cout << "1- Singly Circular Linked List" << endl;
+        cout << "2- Doubly Circular Linked List" << endl;
+        cout << "3- Go back to Main Menu" << endl;
+        cout << "4- Exit Program" << endl;
+        cout << "Enter Your Choice : ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            SCLLMainMenu();
+        }
+        if (choice == 2)
+        {
+            DCLLMainMenu();
+        }
+        if (choice == 3)
+        {
+            mainmenu();
+        }
+        if (choice == 4)
+        {
+            abort();
+        }
+    }
+    void SCLLMainMenu()
+    {
+        system("cls");
+        cout << "Welcome to Singly Circular Linked List Main Menu" << endl;
+        cout << "Note ::: For Option (2- 6). First Select Option 1" << endl;
+        cout << "1- Add Data" << endl;
+        cout << "2- Insert Data" << endl;
+        cout << "3- Delete Data" << endl;
+        cout << "4- Search Data" << endl;
+        cout << "5- Update Data" << endl;
+        cout << "6- Display ALL Data" << endl;
+        cout << "7- Go Back to Main Menu" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            SCLLAddData();
+        }
+        if (choice == 2)
+        {
+            SCLLInsertData();
+        }
+        if (choice == 3)
+        {
+            SCLLDeleteData();
+        }
+        if (choice == 4)
+        {
+            SCLLSearchData();
+        }
+        if (choice == 5)
+        {
+            SCLLUpdateData();
+        }
+        if (choice == 6)
+        {
+            SCLLDisplayData();
+        }
+        if (choice == 7)
+        {
+            mainmenu();
+        }
+    }
+    void SCLLAddData()
+    {
+        
+        system("cls");
+        while (SCLLlast->next != SCLLhead)
+        {
+            SCLLnewnode = new SCLLNode;
+            cout<<"Enter Data : ";
+            cin>>SCLLnewnode->data;
+
+            if(SCLLhead == NULL)
+            {
+                SCLLhead = SCLLnewnode;
+                SCLLfirst = SCLLnewnode;
+                SCLLlast = SCLLnewnode;
+            }
+            else
+            {
+                SCLLlast->next = SCLLnewnode;
+                SCLLlast = SCLLnewnode;
+            }
+            cout<<"Do You Want to Enter More Data (1/0) : ";
+            cin>>confirm;
+            if(confirm == 1)
+            {
+                continue;
+            }
+            else
+            {
+                SCLLlast->next = SCLLhead;
+            }
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            CLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void SCLLInsertData()
+    {
+        system("cls");
+        cout << "Choose the Right Option Below" << endl;
+        cout << "1- Insert at Start" << endl;
+        cout << "2- Insert at any point" << endl;
+        cout << "3- Insert at End" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            system("cls");
+            SCLLNode *temp = SCLLhead;
+            do
+            {
+                temp = temp->next;
+            } while (temp != SCLLhead);
+
+            SCLLnewnode = new SCLLNode;
+            cout<<"Enter Data : ";
+            cin>>SCLLnewnode->data;
+            SCLLlast->next = SCLLnewnode;
+            SCLLnewnode->next = SCLLhead;
+            SCLLhead = SCLLnewnode;
+            cout<<"Data Entered Successfully"<<endl;
+        }
+        if (confirm == 2)
+        {
+            cout<<"Enter Position Where You Want to Enter Value : ";
+            cin>>value;
+
+            SCLLNode *temp = SCLLhead;
+            for(int i=1 ; i < value - 1 ; i++)
+            {
+                temp = temp->next;
+            }
+
+            SCLLnewnode = new SCLLNode;
+            cout<<"Enter Data : ";
+            cin>>SCLLnewnode->data;
+            SCLLnewnode->next = temp->next;
+            temp->next = SCLLnewnode;
+            cout<<"Data Entered Successfully"<<endl;
+        }
+        if (confirm == 3)
+        {
+            system("cls");
+            SCLLNode *temp = SCLLhead;
+            do
+            {
+                temp = temp->next;
+            } while (temp != SCLLhead);
+
+            SCLLnewnode = new SCLLNode;
+            cout<<"Enter Data : ";
+            cin>>SCLLnewnode->data;
+            SCLLlast->next = SCLLnewnode;
+            SCLLnewnode->next = SCLLhead;
+            SCLLlast = SCLLnewnode;
+            cout<<"Data Entered Successfully"<<endl;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            SCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void SCLLDeleteData()
+    {
+        system("cls");
+        cout << "Choose The Option From Below" << endl;
+        cout << "1- Delete From Start" << endl;
+        cout << "2- Delete From Any Point" << endl;
+        cout << "3- Delete From End" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            system("cls");
+            SCLLNode *temp = SCLLhead;
+            do
+            {
+                temp = temp->next;
+            } while (temp != SCLLhead);
+
+            SCLLhead = SCLLhead->next;
+            free(SCLLlast->next);
+            SCLLlast->next = SCLLhead;
+            cout<<"Data Deleted Succesfully"<<endl;
+        }
+        if(confirm == 2)
+        {
+            system("cls");
+            cout<<"Enter Position Where You Want to Delete : ";
+            cin>>value;
+            SCLLNode *temp = SCLLhead;
+            for(int i = 1 ; i<value - 1 ; i++)
+            {
+                temp = temp->next;
+            }
+            SCLLNode *temp2 = temp->next;
+            temp->next = temp->next->next;
+            free(temp2);
+            delete temp2, temp;
+            cout<<"Data Deleted Successfully"<<endl;
+        }
+        if(confirm == 3)
+        {
+            system("cls");
+            SCLLNode *temp = SCLLhead;
+            do
+            {
+                temp = temp->next;
+            } while (temp->next != SCLLhead);
+
+            free(temp->next);
+            temp->next = SCLLhead;
+            cout<<"Data Deleted Successfully"<<endl;
+
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            SCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void SCLLSearchData()
+    {
+        int flag;
+        system("cls");
+        cout<<"Enter Data To Search : ";
+        cin>>value;
+
+        SCLLNode *temp = SCLLhead;
+        do
+        {
+            if(value == temp->data)
+            {
+                flag = 1;
+            }
+            temp = temp->next;
+        } while (temp != SCLLhead);
+        if(flag == 1)
+        {
+            cout<<"Data Found Successfully"<<endl;
+        }
+        else
+        {
+            cout<<"Data Not Found"<<endl;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            SCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void SCLLUpdateData()
+    {
+        system("cls");
+        cout<<"Enter Position Where You Want to Update Data : ";
+        cin>>value;
+
+        SCLLNode *temp = SCLLhead;
+        for(int i = 1 ; i< value - 1; i++)
+        {
+            temp = temp->next;
+        }
+
+        cout<<"Enter Updated Value : ";
+        cin>>temp->data;
+        cout<<"Data Updated Successfully"<<endl;
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            SCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void SCLLDisplayData()
+    {
+        system("cls");
+        if(SCLLhead != NULL)
+        {
+            SCLLNode *temp = SCLLhead;
+            do
+            {
+                cout<<temp->data<<endl;
+                temp = temp->next;
+            } while (temp != SCLLhead);
+            
+        }
+        else
+        {
+            cout<<"List is Emplty. Please Enter Data First From Main Menu"<<endl;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            SCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void DCLLMainMenu()
+    {
+        system("cls");
+        cout << "Welcome to Doubly Circular Linked List Main Menu" << endl;
+        cout << "Note ::: For Option (2- 6). First Select Option 1" << endl;
+        cout << "1- Add Data" << endl;
+        cout << "2- Insert Data" << endl;
+        cout << "3- Delete Data" << endl;
+        cout << "4- Search Data" << endl;
+        cout << "5- Update Data" << endl;
+        cout << "6- Display ALL Data" << endl;
+        cout << "7- Go Back to Main Menu" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            DCLLAddData();
+        }
+        if (choice == 2)
+        {
+            DCLLInsertData();
+        }
+        if (choice == 3)
+        {
+            DCLLDeleteData();
+        }
+        if (choice == 4)
+        {
+            DCLLSearchData();
+        }
+        if (choice == 5)
+        {
+            DCLLUpdateData();
+        }
+        if (choice == 6)
+        {
+            DCLLDisplayData();
+        }
+        if (choice == 7)
+        {
+            CLLMainMenu();
+        }
+    }
+
+    void DCLLAddData()
+    {
+        while (DCLLlast->next != DCLLhead)
+        {
+            DCLLnewnode = new DCLLNode;
+            cout << "Enter Data : ";
+            cin >> DCLLnewnode->data;
+
+            if (DCLLhead == NULL)
+            {
+                DCLLhead = DCLLnewnode;
+                DCLLfirst = DCLLnewnode;
+                DCLLlast = DCLLnewnode;
+                DCLLhead->prev = NULL;
+            }
+            else
+            {
+                DCLLlast->next = DCLLnewnode;
+                DCLLlast->next->prev = DCLLlast;
+                DCLLlast = DCLLnewnode;
+            }
+            cout << "Do You Want to Enter More Data (1/0) : ";
+            cin >> confirm;
+            if (confirm == 1)
+            {
+                continue;
+            }
+            if (confirm == 0)
+            {
+                DCLLlast->next = DCLLhead;
+                DCLLhead->prev = DCLLlast;
+            }
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void DCLLInsertData()
+    {
+        system("cls");
+        cout << "Choose the Right Option Below" << endl;
+        cout << "1- Insert at Start" << endl;
+        cout << "2- Insert at any point" << endl;
+        cout << "3- Insert at End" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            system("cls");
+            DCLLnewnode = new DCLLNode;
+            cout << "Enter Data : ";
+            cin >> DCLLnewnode->data;
+            DCLLnewnode->next = DCLLhead;
+            DCLLnewnode->prev = DCLLlast;
+            DCLLlast->next = DCLLnewnode;
+            DCLLhead = DCLLnewnode;
+            cout << "Data Added Sucessfully" << endl;
+        }
+        if (confirm == 2)
+        {
+            system("cls");
+            cout << "Enter Position Where You want to Enter Data : ";
+            cin >> value;
+            DCLLNode *temp = DCLLhead;
+            for (int i = 1; i < value - 1; i++)
+            {
+                temp = temp->next;
+            }
+
+            DCLLnewnode = new DCLLNode;
+            DCLLnewnode->prev = temp;
+            DCLLnewnode->next = temp->next;
+            temp->next->prev = DCLLnewnode;
+            temp->next = DCLLnewnode;
+            cout << "Enter Data : ";
+            cin >> DCLLnewnode->data;
+            cout << "Data Added Sucessfully" << endl;
+        }
+        if (confirm == 3)
+        {
+            system("cls");
+            DCLLnewnode = new DCLLNode;
+            cout << "Enter Data : ";
+            cin >> DCLLnewnode->data;
+            DCLLnewnode->prev = DCLLlast;
+            DCLLnewnode->next = DCLLhead;
+            DCLLlast->next = DCLLnewnode;
+            DCLLhead->prev = DCLLnewnode;
+            DCLLlast = DCLLnewnode;
+            cout << "Data Added Successfully" << endl;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void DCLLDeleteData()
+    {
+        system("cls");
+        cout << "Choose The Option From Below" << endl;
+        cout << "1- Delete From Start" << endl;
+        cout << "2- Delete From Any Point" << endl;
+        cout << "3- Delete From End" << endl;
+        cout << "Enter Your Choice Here : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            system("cls");
+            DCLLhead = DCLLhead->next;
+            free(DCLLhead->prev);
+            DCLLhead->prev = DCLLlast;
+            DCLLlast->next = DCLLhead;
+            cout << "Data Deleted Succesfully" << endl;
+        }
+        if (confirm == 2)
+        {
+            cout << "Enter Position Where You Want to Delete Data : ";
+            cin >> value;
+
+            DCLLNode *temp = DCLLhead;
+            for (int i = 1; i < value - 1; i++)
+            {
+                temp = temp->next;
+            }
+
+            temp->next = temp->next->next;
+            free(temp->next->prev);
+            temp->next->prev = temp;
+            cout << "Data Deleted Successfully" << endl;
+        }
+        if (confirm == 3)
+        {
+            system("cls");
+            DCLLlast = DCLLlast->prev;
+            free(DCLLlast->next);
+            DCLLlast->next = DCLLhead;
+            DCLLhead->prev = DCLLlast;
+            cout << "Data Deleted Sucessfully" << endl;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void DCLLSearchData()
+    {
+        int flag;
+        cout<<"Enter Value You Want to Search : ";
+        cin>>value;
+        DCLLNode *temp = DCLLhead;
+        do
+        {
+            if(temp->data == value)
+            {
+                flag = 1;
+            }
+            temp = temp->next;
+        }while(temp->next != DCLLhead);
+        if(flag == 1)
+        {
+            cout<<"Data Found"<<endl;
+        }
+        else
+        {
+            cout<<"Data Not Found"<<endl;
+        }
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void DCLLUpdateData()
+    {
+        system("cls");
+        cout<<"Enter Position Where You Want to Update Data : ";
+        cin>>value;
+        DCLLNode *temp = DCLLhead;
+        for (int i = 1; i < value ; i++)
+        {
+            temp = temp->next;
+        }
+
+        cout<<"Enter Updated Value : ";
+        cin>>temp->data;
+        cout<<"Data Updated Successfully"<<endl;
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+    void DCLLDisplayData()
+    {
+        system("cls");
+        DCLLNode *temp = DCLLhead;
+        do
+        {
+            cout << temp->data << endl;
+            temp = temp->next;
+        } while (temp != DCLLhead);
+        cout << "Do you want to go back to menu(1/0) : ";
+        cin >> confirm;
+        if (confirm == 1)
+        {
+            DCLLMainMenu();
+        }
+        if (confirm == 0)
+        {
+            abort();
+        }
+    }
+};
+int main()
+{
+    linkedlist ll;
+    ll.mainmenu();
+}
