@@ -1,0 +1,140 @@
+#include <iostream>
+using namespace std;
+class Queue
+{
+    int front = -1, rear = -1;
+    int choice;
+    char confirm;
+    int *arr;
+    int size;
+
+public:
+    void mainmenu();
+    void enqueue();
+    void deQueue();
+    void display();
+};
+void Queue ::mainmenu()
+{
+
+    cout << "Welcome to Circular Queue" << endl;
+    cout << "1- EnQueue Data" << endl;
+    cout << "2- DeQueue Data" << endl;
+    cout << "3- Display Front and Rear" << endl;
+    cout << "4- Exit Program" << endl;
+    cout << "Enter Your Choice Here : ";
+    cin >> choice;
+    switch (choice)
+    {
+    case 1:
+        enqueue();
+    case 2:
+        deQueue();
+    case 3:
+        display();
+    case 4:
+        abort();
+    default:
+        break;
+    }
+}
+void Queue :: enqueue()
+{
+    if(front == -1 && rear == -1)
+    {
+        cout<<"Runned"<<endl;
+        cout<<"Enter Length of Array : ";
+        cin>>size;
+        arr = new int[size];
+        while(rear<size-1)
+        {
+            rear++;
+            cout<<"Enter Data : ";
+            cin>>arr[rear];
+            front = 0;
+        }
+    }
+    else if(front>0 && rear<=size-1)
+    {
+        cout<<"Runned"<<endl;
+        while(rear!=front-1)
+        {
+            rear = (rear+1)%size;
+            cout<<"Enter Data : ";
+            cin>>arr[rear];
+        }
+    }
+    else
+    {
+        cout<<"Queue is Full. Cannot EnQueue More Data"<<endl;
+    }
+    cout<<"Do You Want to Go Back to Main Menu(Y,N) : ";
+    cin>>confirm;
+    switch (confirm)
+    {
+    case 'Y':
+        mainmenu();
+    case 'y':
+        mainmenu();
+    case 'N':
+        abort();
+    case 'n':
+        abort();
+    }
+}
+void Queue :: deQueue()
+{
+    if(front!=-1 && rear != -1)
+    {
+        arr[front] = 0;
+        front++;
+    }
+    else
+    {
+        cout<<"Queue is Empty. Cannot DeQueue Data"<<endl;
+    }
+    cout<<"Do You Want to Go Back to Main Menu(Y,N) : ";
+    cin>>confirm;
+    switch (confirm)
+    {
+    case 'Y':
+        mainmenu();
+    case 'y':
+        mainmenu();
+    case 'N':
+        abort();
+    case 'n':
+        abort();
+    }
+}
+void Queue :: display()
+{
+    int ite = front;
+    cout<<"Front : "<<front<<endl;
+    cout<<"Rear : "<<rear<<endl;
+    do
+    {
+        cout<<arr[ite]<<endl;
+        ite = (ite+1)%size;
+    } while (ite!=front);
+    
+    cout<<"Do You Want to Go Back to Main Menu(Y,N) : ";
+    cin>>confirm;
+    switch (confirm)
+    {
+    case 'Y':
+        mainmenu();
+    case 'y':
+        mainmenu();
+    case 'N':
+        abort();
+    case 'n':
+        abort();
+    }
+}
+int main()
+{
+    Queue Q;
+    Q.mainmenu();
+}
+    
